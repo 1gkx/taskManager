@@ -46,12 +46,7 @@ func NewRouter() *mux.Router {
 func index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "No-Cache")
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	template.Templates.ExecuteTemplate(w, "home",
-		map[string]interface{}{
-			"user": nil,
-			"data": nil,
-		},
-	)
+	template.Templates.ExecuteTemplate(w, "home", nil)
 }
 
 // func errorhendler(w http.ResponseWriter, r *http.Request) {
