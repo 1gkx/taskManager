@@ -1,29 +1,12 @@
 {{ define "list" }}
 
-{{template "header" .}}
+{{template "header" .title}}
 {{template "navbar" .}}
-
 
 <div class="container main my-5">
   <div class="row">
     <div class="col-3">
-      <div class="list-group">
-        <a href="/admin/users" class="list-group-item active">
-          <i class="fas fa-users mx-2"></i>Пользователи
-        </a>
-        <a href="/admin/#" class="list-group-item">
-          <i class="fas fa-user-shield mx-2"></i>Группы
-        </a>
-        <a href="/admin/#" class="list-group-item">
-          <i class="fas fa-cubes mx-2"></i>Проекты
-        </a>
-        <a href="/admin/settings" class="list-group-item">
-          <i class="fas fa-cogs mx-2"></i>Настройки
-        </a>
-        <a href="/admin/#" class="list-group-item">
-          <i class="fas fa-info-circle mx-2"></i>Информация
-        </a>
-      </div>
+      {{ block "leftmenu" .}}{{ end }}
     </div>
     <div class="col-9">
       <div class="row">

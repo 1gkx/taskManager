@@ -1,6 +1,8 @@
 package router
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -34,6 +36,7 @@ func userprofile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	template.Templates.ExecuteTemplate(w, "user",
 		map[string]interface{}{
+			"title":     fmt.Sprintf("Admin / %s", u.DisplayName()),
 			"isNew":     isNew,
 			"isProfile": false,
 			"user":      nil,
@@ -59,8 +62,9 @@ func userList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	template.Templates.ExecuteTemplate(w, "list", map[string]interface{}{
-		"user": nil,
-		"data": store.FindUser(page, limit),
+		"title": "Admin / Users",
+		"user":  nil,
+		"data":  store.FindUser(page, limit),
 	})
 }
 
@@ -73,22 +77,23 @@ func userList(w http.ResponseWriter, r *http.Request) {
 // }
 
 // func userAdd(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+func userAdd(w http.ResponseWriter, r *http.Request) {
 
-// 	u := new(store.User)
-// 	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
-// 		RespAPI(http.StatusInternalServerError, w, err)
-// 		return
-// 	}
+	u := new(store.User)
+	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+		RespAPI(http.StatusInternalServerError, w, err)
+		return
+	}
 
-// 	fmt.Printf("User: %+v\n", u)
+	fmt.Printf("User: %+v\n", u)
 
-// 	if err := store.AddUser(u); err != nil {
-// 		RespAPI(http.StatusInternalServerError, w, err)
-// 		return
-// 	}
-// 	w.WriteHeader(201)
-// 	return
-// }
+	// if err := store.AddUser(u); err != nil {
+	// 	RespAPI(http.StatusInternalServerError, w, err)
+	// 	return
+	// }
+	w.WriteHeader(201)
+	return
+}
 
 // func userUpdate(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
@@ -131,10 +136,10 @@ func userList(w http.ResponseWriter, r *http.Request) {
 // 	return
 // }
 
-// func RespAPI(code int, w http.ResponseWriter, data interface{}) {
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(code)
-// 	json.NewEncoder(w).Encode(
-// 		fmt.Sprintf("{\"status\": \"%s\"}", data),
-// 	)
-// }
+func RespAPI(code int, w http.ResponseWriter, data interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(
+		fmt.Sprintf("{\"status\": \"%s\"}", data),
+	)
+}

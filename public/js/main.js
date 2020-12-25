@@ -56,17 +56,20 @@ var MessageVisibleTimeout = 5000, // 5s
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  $('.page-item').on('click', function(e) {
-   let page = e.target.dataset.page
-   $.ajax({ method: 'get', url: '/?page=' + page })
-    .done(function (res) {
-      res = JSON.parse(res)
-      // console.log(res)
-      drawTableClients(res.data)
-    })
-    .fail(function (e) {
-      console.log(e)
-    });
+  $('.page-item').on('click', function (e) {
+    let page = e.target.dataset.page
+    $.ajax({
+        method: 'get',
+        url: '/?page=' + page
+      })
+      .done(function (res) {
+        res = JSON.parse(res)
+        // console.log(res)
+        drawTableClients(res.data)
+      })
+      .fail(function (e) {
+        console.log(e)
+      });
   });
 
   // Форматируем номер телефона
@@ -92,21 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Авторизация и верификация
-  $(".login").submit(function (e) {
-    let self = this;
-    e.preventDefault();
-    if (this.checkValidity() === false) return this.classList.add('was-validated');
-    $.post(this.action, $(this).serializeArray())
-      .done(function (res) {
-        let responce = JSON.parse(res)
-        $(self).auth(responce)
-      })
-      .fail(function (e) {
-        let error = JSON.parse(e.responseText)
-        $(self).fail(error.data.message)
-      });
-  });
+
 
   // Сохранение данных пользователя
   $(".adduser").submit(function (e) {
@@ -120,26 +109,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     console.log(forJson);
 
-    $.ajax({
-      method: 'POST',
-      url: this.action,
-      contentType: 'application/json',
-      data: JSON.stringify(forJson)
+    fetch('/admin/user', {
+      method: 'post',
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: 'forJson'
     })
-    .done(function (res) {
-      // let responce = JSON.parse(res)
-      // $().message(true, responce.status)
-      return document.location.href = '/admin/users'
-    })
-    .fail(function (e) {
-      // console.log(e)
-      let error = JSON.parse(e.responseText)
-      $().message(false, error)
-    });
+      .then(
+        function(response) {
+          console.log(response)
+          // if (response.status !== 200) {  
+          //   console.log('Looks like there was a problem. Status Code: ' +  
+          //     response.status);  
+          //   return;  
+          // }
 
-    // $.post(this.action, JSON.stringify($(this).serializeArray()))
-    //   .done(responce => $().message(true, responce))
-    //   .fail(error => $().message(false, error));
+          // // Examine the text in the response  
+          // response.json().then(function(data) {  
+          //   console.log(data);  
+          // });  
+        }  
+      )  
+      .catch(function(err) {  
+        console.log('Fetch Error :-S', err);  
+      });
+
+    // $.ajax({
+    //     method: 'POST',
+    //     url: this.action,
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(forJson)
+    //   })
+    //   .done(function (res) {
+    //     // let responce = JSON.parse(res)
+    //     // $().message(true, responce.status)
+    //     return document.location.href = '/admin/users'
+    //   })
+    //   .fail(function (e) {
+    //     // console.log(e)
+    //     let error = JSON.parse(e.responseText)
+    //     $().message(false, error)
+    //   });
   });
 
   // Сохранение данных пользователя
@@ -154,21 +163,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     forJson.id = parseInt(forJson.id)
     console.log(forJson);
-    $.ajax({
-        method: 'PUT',
-        url: this.action,
-        contentType: 'application/json',
-        data: JSON.stringify(forJson)
-      })
-      .done(function (res) {
-        let responce = JSON.parse(res)
-        return document.location.href = self.dataset.redirect
-      })
-      .fail(function (e) {
-        // console.log(e)
-        let error = JSON.parse(e.responseText)
-        $().message(false, error.status)
+
+    fetch('/admin/users', {
+      method: 'post',
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify(forJson)
+    })
+      .then(
+        function(response) {
+          if (response.status !== 201) {  
+            console.error('Looks like there was a problem. Status Code: ' +  response.status);
+            return;
+          }
+          response.json().then( (data) => console.log(data))
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
       });
+
+    // $.ajax({
+    //     method: 'PUT',
+    //     url: this.action,
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(forJson)
+    //   })
+    //   .done(function (res) {
+    //     let responce = JSON.parse(res)
+    //     return document.location.href = self.dataset.redirect
+    //   })
+    //   .fail(function (e) {
+    //     // console.log(e)
+    //     let error = JSON.parse(e.responseText)
+    //     $().message(false, error.status)
+    //   });
   });
 
   // Удаление пользователя
@@ -220,23 +248,23 @@ document.addEventListener("DOMContentLoaded", function () {
       .fail(error => $().message(false, error));
   });
 
-  $('[data-event="approve"]').on('click', approveCard
-      // let $el = $(this).closest('.item');
-      // let data = {
-      //   "ClientID": $($el).data('clientid'),
-      //   "DepositID": $($el).data('depositid'),
-      //   "PhoneNumber": $($el).find(".PhoneNumber").val()
-      // },
-      // self = this;
-      // $.post('/approve', JSON.stringify(data))
-      // .done(responce => {
-      //   let res = JSON.parse(responce)
-      //   // clients = res.clients;
-      //   $().message(true, res.status)
-      //   $($el).fadeOut();
-      // })
-      // .fail(error => $().message(false, error.status));
-  );
+  $('[data-event="approve"]').on('click', approveCard);
+
+  // Авторизация и верификация
+  $(".login").submit(function (e) {
+    let self = this;
+    e.preventDefault();
+    if (this.checkValidity() === false) return this.classList.add('was-validated');
+    $.post(this.action, $(this).serializeArray())
+      .done(function (res) {
+        let responce = JSON.parse(res)
+        $(self).auth(responce)
+      })
+      .fail(function (e) {
+        let error = JSON.parse(e.responseText)
+        $(self).fail(error.data.message)
+      });
+  });
 
   // Установка приложения
   var navListItems = $('div.setup-panel a'),
@@ -409,11 +437,11 @@ function drawTableClients(clients) {
 function drawPagginator(length) {
   document.getElementById('pagination').innerHTML = ''
 
-  for(i = 1; i < length +1; i++) {
+  for (i = 1; i < length + 1; i++) {
     li = document.createElement('li');
     li.classList.add('page-item')
 
-    li.innerHTML = '<span class="page-link" data-page="' + i +'">' + i +'</span>';
+    li.innerHTML = '<span class="page-link" data-page="' + i + '">' + i + '</span>';
 
     document.getElementById('pagination').append(li)
   }
@@ -423,17 +451,17 @@ function drawPagginator(length) {
 function approveCard() {
   let $el = $(this).closest('.item');
   let data = {
-    "ClientID": $($el).data('clientid'),
-    "DepositID": $($el).data('depositid'),
-    "PhoneNumber": $($el).find(".PhoneNumber").val()
-  },
-  self = this;
+      "ClientID": $($el).data('clientid'),
+      "DepositID": $($el).data('depositid'),
+      "PhoneNumber": $($el).find(".PhoneNumber").val()
+    },
+    self = this;
   $.post('/approve', JSON.stringify(data))
-  .done(responce => {
-    let res = JSON.parse(responce)
-    // clients = res.clients;
-    $().message(true, res.status)
-    $($el).fadeOut();
-  })
-  .fail(error => $().message(false, error.status));
+    .done(responce => {
+      let res = JSON.parse(responce)
+      // clients = res.clients;
+      $().message(true, res.status)
+      $($el).fadeOut();
+    })
+    .fail(error => $().message(false, error.status));
 }
