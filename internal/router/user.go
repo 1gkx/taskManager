@@ -1,16 +1,13 @@
 package router
 
-// import (
-// 	"encoding/json"
-// 	"fmt"
-// 	"net/http"
-// 	"strconv"
+import (
+	"net/http"
+	"strconv"
 
-// 	"github.com/1gkx/taskmanager/internal/session"
-// 	"github.com/1gkx/taskmanager/internal/store"
-// 	templates "github.com/1gkx/taskmanager/internal/template"
-// 	"github.com/gorilla/mux"
-// )
+	"github.com/1gkx/taskmanager/internal/store"
+	"github.com/1gkx/taskmanager/internal/template"
+	"github.com/gorilla/mux"
+)
 
 // func setUserRouters() {
 // 	// Users
@@ -22,47 +19,50 @@ package router
 // }
 
 // func userprofile(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+func userprofile(w http.ResponseWriter, r *http.Request) {
 
-// 	vars := mux.Vars(r)
-// 	id, _ := strconv.Atoi(vars["id"])
-// 	u := store.FindByID(uint(id))
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["id"])
+	u := store.FindByID(uint(id))
 
-// 	isNew := false
-// 	if uint(id) == 0 {
-// 		isNew = true
-// 	}
+	isNew := false
+	if uint(id) == 0 {
+		isNew = true
+	}
 
-// 	w.Header().Set("Cache-Control", "No-Cache")
-// 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-// 	templates.Templates.ExecuteTemplate(w, "user",
-// 		map[string]interface{}{
-// 			"isNew":     isNew,
-// 			"isProfile": false,
-// 			"user":      session.GetUser(r),
-// 			"data":      u,
-// 			"redirect":  "/admin/users",
-// 		},
-// 	)
-// 	return
+	w.Header().Set("Cache-Control", "No-Cache")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	template.Templates.ExecuteTemplate(w, "user",
+		map[string]interface{}{
+			"isNew":     isNew,
+			"isProfile": false,
+			"user":      nil,
+			"data":      u,
+			"redirect":  "/admin/users",
+		},
+	)
+	return
 
-// }
+}
 
 // func userList(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-// 	var page = ""
-// 	params := r.URL.Query()
-// 	if len(params) > 0 {
-// 		page = params["page"][0]
-// 	} else {
-// 		page = "1"
-// 	}
-// 	users := store.FindUserLimit(page)
+func userList(w http.ResponseWriter, r *http.Request) {
 
-// 	j := map[string]interface{}{
-// 		"user": session.GetUser(r),
-// 		"data": users,
-// 	}
-// 	templates.Templates.ExecuteTemplate(w, "list", j)
-// }
+	page, limit := 1, 10
+
+	params := r.URL.Query()
+	if len(params["page"]) > 0 {
+		page, _ = strconv.Atoi(params["page"][0])
+	}
+	if len(params["limit"]) > 0 {
+		limit, _ = strconv.Atoi(params["limit"][0])
+	}
+
+	template.Templates.ExecuteTemplate(w, "list", map[string]interface{}{
+		"user": nil,
+		"data": store.FindUser(page, limit),
+	})
+}
 
 // func userNew(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 // 	j := map[string]interface{}{

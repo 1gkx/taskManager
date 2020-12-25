@@ -19,20 +19,27 @@ func NewRouter() *mux.Router {
 	// setSignInRouters()
 	// setSettingRouters()
 
+	publicFolder := http.FileServer(http.Dir("./public"))
+	route.PathPrefix("/js/").Handler(publicFolder)
+	route.PathPrefix("/css/").Handler(publicFolder)
+	route.PathPrefix("/img/").Handler(publicFolder)
+
+	// route.NotFoundHandler = http.HandlerFunc(errorhendler)
 	route.HandleFunc("/", index).Methods("GET")
 	// r.Handle("/user", authRequireHandlerWrap(profile)).Methods("GET")
 
-	// r.NotFoundHandler = http.HandlerFunc(errorhendler)
+	// Users
+	// route.Handle("/admin/users", authRequireHandlerWrap(userList)).Methods("GET")
+	route.HandleFunc("/admin/users", userList).Methods("GET")
+	route.HandleFunc("/admin/users/{id:[0-9]+}", userprofile).Methods("GET")
+
+	// 	r.Handle("/admin/users/{id:[0-9]+}", authRequireHandlerWrap(userprofile)).Methods("GET")
+	// 	r.Handle("/admin/users", authRequireHandlerWrap(userAdd)).Methods("POST")
+	// 	r.Handle("/admin/users", authRequireHandlerWrap(userUpdate)).Methods("PUT")
+	// 	r.Handle("/admin/users", authRequireHandlerWrap(userRemove)).Methods("DELETE")
 
 	return route
 }
-
-// func setPublicFolder() {
-// 	publicFolder := http.FileServer(http.Dir("./public"))
-// 	r.PathPrefix("/js/").Handler(publicFolder)
-// 	r.PathPrefix("/css/").Handler(publicFolder)
-// 	r.PathPrefix("/img/").Handler(publicFolder)
-// }
 
 // func index(next http.Handler) http.Handler {
 //     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

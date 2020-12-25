@@ -3,7 +3,6 @@ package store
 import (
 	"errors"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/jinzhu/gorm"
@@ -26,6 +25,9 @@ type User struct {
 	Password    string `json:"password,omitempty"`
 	NewPassword string `json:"newpassword,omitempty;gorm:"-""`
 	Admin       string `json:"admin,omitempty";gorm:"default:false"`
+	Location    string
+	Position    string
+	Avatart     string
 }
 
 /** CRUD Methods **/
@@ -38,32 +40,23 @@ func AddUser(u *User) error {
 	if IsUserExist(u) {
 		return UserAlreadyExist
 	}
-	u.HashPass()
+	u.EncodePass()
 
 	return x.Create(u).Error
 }
 
-func FindUser() []*User {
+func FindUser(page int, limit int) []*User {
 	var users []*User
-	x.Raw("SELECT id, first_name, last_name, phone, email, admin, created_at, updated_at, deleted_at FROM users").Scan(&users)
-
-	return users
-}
-
-func FindUserLimit(page string) []*User {
-	var users []*User
-
-	offset, _ := strconv.Atoi(page)
-	offset = offset - 1
-
-	// Вынести смещение в переменную, т.к. используется в нескольких местах
-	x.Raw("SELECT id, first_name, last_name, phone, email, admin, created_at, updated_at, deleted_at FROM users").Offset(offset * 5).Limit(5).Scan(&users)
-
+	offset := page - 1
+	if err := x.Debug().Offset(offset * limit).Limit(limit).Find(&users).Error; err != nil {
+		// Пишем ошибку в лог
+		return nil
+	}
 	return users
 }
 
 func UpdateUser(u *User) error {
-	u.HashPass()
+	u.EncodePass()
 	return x.Save(u).Error
 }
 
@@ -111,24 +104,22 @@ func IsUserExist(u *User) bool {
 	return x.Debug().Where("id = ? OR email = ?", u.ID, strings.ToLower(u.Email)).Find(&User{}).RowsAffected > 0
 }
 
-func (u *User) HashPass() error {
-
-	password, err := bcrypt.GenerateFromPassword([]byte(u.Password), 0)
-	if err != nil {
-		return err
-
+// Работа с паролями
+func (u *User) EncodePass() {
+	if password, err := bcrypt.GenerateFromPassword([]byte(u.Password), 0); err == nil {
+		u.Password = fmt.Sprintf("%s", password)
 	}
-	u.Password = string(password)
-	return nil
+	// Логировать ошибку
 }
-
-// ComparePass ..
-func (u *User) ComparePass(pwd string) bool {
+func (u *User) ValidatePass(pwd string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(pwd))
 	return err == nil
 }
 
-func (u *User) GetFullName() string {
+func (u *User) DisplayName() string {
+	if u.ID == 0 {
+		return "Новый пользователь"
+	}
 	return fmt.Sprintf("%s %s", u.FirstName, u.LastName)
 }
 

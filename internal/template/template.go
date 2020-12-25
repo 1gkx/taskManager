@@ -21,7 +21,7 @@ var funcMap = template.FuncMap{
 			return 5 > 2
 		}
 		if arrType == "[]*store.User" {
-			return len(store.FindUser()) > 2
+			return len(store.FindUser(1, 10)) > 2
 		}
 		return false
 	},
@@ -33,7 +33,7 @@ var funcMap = template.FuncMap{
 			arrLength = 5
 		}
 		if arrType == "[]*store.User" {
-			arrLength = len(store.FindUser())
+			arrLength = len(store.FindUser(1, 10))
 		}
 		// Вынести смещение в переменную, т.к. используется в нескольких местах
 		count := arrLength / 5
@@ -55,7 +55,7 @@ var funcMap = template.FuncMap{
 
 		u := store.FindByID(id)
 
-		return u.GetFullName()
+		return u.DisplayName()
 	},
 }
 

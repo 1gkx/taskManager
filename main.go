@@ -21,7 +21,7 @@ func main() {
 	app.Version = "0.1.0+dev"
 	app.Commands = []cli.Command{
 		cmd.Start,
-		cmd.Install,
+		// cmd.Install,
 	}
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal("Failed to start application: %v", err)

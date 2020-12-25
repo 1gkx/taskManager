@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 
 	"github.com/1gkx/taskmanager/internal/router"
+	"github.com/1gkx/taskmanager/internal/store"
 	"github.com/1gkx/taskmanager/internal/template"
 )
 
@@ -23,9 +24,9 @@ func runWeb(c *cli.Context) {
 	// if err := conf.Read(); err != nil {
 	// 	panic(err)
 	// }
-	// if err := store.Initialize(); err != nil {
-	// 	panic(err)
-	// }
+	if err := store.Initialize(); err != nil {
+		panic(err)
+	}
 
 	// session.Start()
 	template.InitTemplate()
