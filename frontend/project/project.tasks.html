@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-dark shadow-sm bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <h1>Task Manager</h1>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Домашняя страница<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Моя страница</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Проекты</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Администрирование</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Помощь</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <i class="fas fa-user" style="font-size: 35px; color: rgba(255,255,255,.5);"></i>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Konovalov Igor
+            </a>
+            <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/user">Профиль</a>
+              <a class="dropdown-item" href="/admin/settings">Настройки</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/logout">Выход</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-5 container main card">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="my-4 text-center">CRM Bitrix 24</h3>
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Обзор</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Задачи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Участники</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Wiki</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Настройки</a>
+          </li>
+        </ul>
+
+        <div class="card">
+          <div class="row my-3">
+            <div class="col-10">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="filter"><i class="fas fa-search"></i></div>
+                </div>
+                <input type="text" class="form-control" placeholder="Поиск">
+              </div>
+            </div>
+            <div class="col-2">
+              <a href="/admin/users/0" class="btn btn-primary float-right mx-2 mb-3"><i class="fas fa-plus-square mr-2"></i>Поиск</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <table class="table table-striped table-hover table-list-search">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>#</th><th>Трекре</th><th>Статус</th><th>Приоритет</th><th>Тема</th><th>Назначена</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="item">
+                    <td>1</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №1</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>2</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №2</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>3</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №3</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>4</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №4</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>5</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №5</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>6</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №6</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>7</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №7</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>8</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №8</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>9</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №9</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>10</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №10</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>11</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №11</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>12</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №12</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>13</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №13</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>14</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №14</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                  <tr class="item">
+                    <td>15</td>
+                    <td>Улучшение</td>
+                    <th>Новая</th>
+                    <th>Нормальный</th>
+                    <th>Задача №15</th>
+                    <th>Тестико Тестик</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="fixed-bottom">
+    <div class="container text-center">
+      <p class="nav-link">©1gkx 2020</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/imask"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+
+</html>

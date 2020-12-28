@@ -21,7 +21,7 @@ func Initialize() error {
 	// 	}
 	// }
 
-	// migrate()
+	migrate()
 
 	return nil
 }

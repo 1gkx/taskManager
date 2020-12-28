@@ -11,17 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// func setUserRouters() {
-// 	// Users
-// 	r.Handle("/admin/users", authRequireHandlerWrap(userList)).Methods("GET")
-// 	r.Handle("/admin/users/{id:[0-9]+}", authRequireHandlerWrap(userprofile)).Methods("GET")
-// 	r.Handle("/admin/users", authRequireHandlerWrap(userAdd)).Methods("POST")
-// 	r.Handle("/admin/users", authRequireHandlerWrap(userUpdate)).Methods("PUT")
-// 	r.Handle("/admin/users", authRequireHandlerWrap(userRemove)).Methods("DELETE")
-// }
-
-// func userprofile(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-func userprofile(w http.ResponseWriter, r *http.Request) {
+func userview(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id, _ := strconv.Atoi(vars["id"])
@@ -48,7 +38,6 @@ func userprofile(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// func userList(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 func userList(w http.ResponseWriter, r *http.Request) {
 
 	page, limit := 1, 10
@@ -68,15 +57,6 @@ func userList(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// func userNew(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-// 	j := map[string]interface{}{
-// 		"user": session.GetUser(r),
-// 		"data": store.FindUser(),
-// 	}
-// 	templates.Templates.ExecuteTemplate(w, "new", j)
-// }
-
-// func userAdd(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 func userAdd(w http.ResponseWriter, r *http.Request) {
 
 	u := new(store.User)
@@ -85,61 +65,36 @@ func userAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("User: %+v\n", u)
+	// New User
+	if u.ID == 0 {
+		if err := store.CreateOrUpdate(u); err != nil {
+			RespAPI(http.StatusInternalServerError, w, err.Error())
+			return
+		}
+		return
+	}
+	if u.ID > 0 {
+		if err := store.CreateOrUpdate(u); err != nil {
+			RespAPI(http.StatusInternalServerError, w, err.Error())
+			return
+		}
+		return
+	}
 
-	// if err := store.AddUser(u); err != nil {
-	// 	RespAPI(http.StatusInternalServerError, w, err)
-	// 	return
-	// }
-	w.WriteHeader(201)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"status": false,
+		"data":   "Invalid or missing id",
+	})
 	return
 }
-
-// func userUpdate(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-
-// 	tmpUser := new(store.User)
-// 	if err := json.NewDecoder(r.Body).Decode(&tmpUser); err != nil {
-// 		RespAPI(http.StatusInternalServerError, w, err)
-// 		return
-// 	}
-
-// 	u := store.FindByID(tmpUser.ID)
-// 	fmt.Println(u)
-// 	if u == nil {
-// 		RespAPI(http.StatusInternalServerError, w, "user not found")
-// 		return
-// 	}
-
-// 	if err := store.UpdateUser(tmpUser); err != nil {
-// 		RespAPI(http.StatusInternalServerError, w, err)
-// 		return
-// 	}
-
-// 	RespAPI(http.StatusOK, w, "OK")
-// 	return
-// }
-
-// func userRemove(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-
-// 	u := new(store.User)
-// 	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
-// 		RespAPI(http.StatusInternalServerError, w, err)
-// 		return
-// 	}
-
-// 	if err := store.DeleteUserByID(u.ID); err != nil {
-// 		RespAPI(http.StatusInternalServerError, w, "Fail")
-// 		return
-// 	}
-
-// 	RespAPI(http.StatusOK, w, "OK")
-// 	return
-// }
 
 func RespAPI(code int, w http.ResponseWriter, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	json.NewEncoder(w).Encode(
-		fmt.Sprintf("{\"status\": \"%s\"}", data),
-	)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"status": false,
+		"data":   data,
+	})
 }

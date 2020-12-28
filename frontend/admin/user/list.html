@@ -1,0 +1,56 @@
+{{ define "list" }}
+
+{{template "header" .title}}
+{{template "navbar" .}}
+
+<div class="container main my-5">
+  <div class="row">
+    <div class="col-3">
+      {{ block "leftmenu" .}}{{ end }}
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-10">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="filter"><i class="fas fa-search"></i></div>
+            </div>
+            <input type="text" class="form-control" placeholder="Поиск">
+          </div>
+        </div>
+        <div class="col-2">
+          <a href="/admin/users/0" class="btn btn-primary float-right mb-3"><i class="fas fa-plus-square mr-2"></i>Новый</a>
+        </div>
+      </div>
+      <div class="main w-100 h-100">
+        <table class="table table-striped table-hover table-list-search">
+          <thead class="thead-dark">
+            <tr>
+              <th></th><th>Пользователь</th><th>Email</th><th>Телефон</th><th>Администратор</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{range .data}}
+            <tr class="item" data-id="{{ .ID }}">
+              <td><i class="fas fa-user-circle" style="font-size: 42px;"></i></td>
+              <td><a href="/admin/users/{{ .ID }}">{{ .DisplayName }}</a></td>
+              <td>{{ .Email }}</td>
+              <td>{{ .Phone }}</td>
+              <td class="text-center">
+                <i class="fas fa-check"></i>
+              </td>
+              <td><a href="#" class="btn btn-danger" data-event="delete" title="Удалить"><i class="fas fa-trash"></i></a>
+              </td>
+            </tr>
+            {{end}}
+          </tbody>
+        </table>
+      </div>
+      {{ block "paggination" .}}{{ end }}
+    </div>
+  </div>
+</div>
+
+{{template "footer" .}}
+
+{{ end }}

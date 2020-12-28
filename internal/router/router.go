@@ -31,7 +31,7 @@ func NewRouter() *mux.Router {
 	// Users
 	// route.Handle("/admin/users", authRequireHandlerWrap(userList)).Methods("GET")
 	route.HandleFunc("/admin/users", userList).Methods("GET")
-	route.HandleFunc("/admin/users/{id:[0-9]+}", userprofile).Methods("GET")
+	route.HandleFunc("/admin/users/{id:[0-9]+}", userview).Methods("GET")
 	route.HandleFunc("/admin/users", userAdd).Methods("POST")
 
 	// 	r.Handle("/admin/users/{id:[0-9]+}", authRequireHandlerWrap(userprofile)).Methods("GET")

@@ -26,67 +26,59 @@ type admin struct {
 }
 
 type Config struct {
-	Prod     bool              `json:"prod";ini:"prod"`
-	Database database          `json:"database";ini:"database"`
-	Mail     mail              `json:"mail";ini:"mail"`
-	Gateway  string            `json:"gateway";ini:"gateway"`
-	Methods  map[string]string `json:"methods";ini:"methods"`
-	Admin    admin             `json:admin`
+	File     *ini.File
+	Prod     bool     `json:"prod";ini:"prod"`
+	Database database `json:"database";ini:"database"`
+	Mail     mail     `json:"mail";ini:"mail"`
+	Admin    admin    `json:admin`
 }
 
-var Cfg *Config
-var fileConfig *ini.File
+var (
+	Cfg      *Config
+	confPath string = "conf/app.ini"
+)
 
 func Read() error {
 
 	var err error
 
-	fileConfig, err = ini.InsensitiveLoad("conf/app.ini")
-	if err != nil {
+	Cfg = new(Config)
+	if Cfg.File, err = ini.InsensitiveLoad(confPath); err != nil {
 		return err
 	}
 
-	Cfg = new(Config)
+	Cfg.Prod = Cfg.File.Section("").Key("prod").MustBool(false)
 
-	Cfg.Prod = fileConfig.Section("").Key("prod").MustBool(false)
-
-	Cfg.Database.Driver = fileConfig.Section("database").Key("driver").In(
+	Cfg.Database.Driver = Cfg.File.Section("database").Key("driver").In(
 		"sqlite3", []string{"sqlite3", "postgres", "mysql"},
 	)
-	Cfg.Database.Host = fileConfig.Section("database").Key("host").String()
-	Cfg.Database.Port = fileConfig.Section("database").Key("port").String()
-	Cfg.Database.User = fileConfig.Section("database").Key("user").String()
-	Cfg.Database.Password = fileConfig.Section("database").Key("password").String()
-	Cfg.Database.Path = fileConfig.Section("database").Key("path").String()
+	Cfg.Database.Host = Cfg.File.Section("database").Key("host").String()
+	Cfg.Database.Port = Cfg.File.Section("database").Key("port").String()
+	Cfg.Database.User = Cfg.File.Section("database").Key("user").String()
+	Cfg.Database.Password = Cfg.File.Section("database").Key("password").String()
+	Cfg.Database.Path = Cfg.File.Section("database").Key("path").String()
 
-	Cfg.Mail.Host = fileConfig.Section("mail").Key("host").String()
-	Cfg.Mail.Port = fileConfig.Section("mail").Key("port").String()
-
-	Cfg.Gateway = fileConfig.Section("").Key("gateway").String()
-
-	Cfg.Methods = map[string]string{
-		"SMS":     fileConfig.Section("methods").Key("sms").String(),
-		"APPROVE": fileConfig.Section("methods").Key("approve").String(),
-	}
+	Cfg.Mail.Host = Cfg.File.Section("mail").Key("host").String()
+	Cfg.Mail.Port = Cfg.File.Section("mail").Key("port").String()
 
 	return nil
 
 }
 
 func Save() {
-	fileConfig.Section("database").Key("driver").SetValue(Cfg.Database.Driver)
-	fileConfig.Section("database").Key("host").SetValue(Cfg.Database.Host)
-	fileConfig.Section("database").Key("port").SetValue(Cfg.Database.Port)
-	fileConfig.Section("database").Key("user").SetValue(Cfg.Database.User)
-	fileConfig.Section("database").Key("password").SetValue(Cfg.Database.Password)
-	fileConfig.Section("database").Key("path").SetValue(Cfg.Database.Path)
 
-	fileConfig.Section("mail").Key("host").SetValue(Cfg.Mail.Host)
-	fileConfig.Section("mail").Key("port").SetValue(Cfg.Mail.Port)
+	// TODO Переделать на цикл
+	Cfg.File.Section("database").Key("driver").SetValue(Cfg.Database.Driver)
+	Cfg.File.Section("database").Key("host").SetValue(Cfg.Database.Host)
+	Cfg.File.Section("database").Key("port").SetValue(Cfg.Database.Port)
+	Cfg.File.Section("database").Key("user").SetValue(Cfg.Database.User)
+	Cfg.File.Section("database").Key("password").SetValue(Cfg.Database.Password)
+	Cfg.File.Section("database").Key("path").SetValue(Cfg.Database.Path)
 
-	fileConfig.Section("").Key("gateway").SetValue(Cfg.Gateway)
+	Cfg.File.Section("mail").Key("host").SetValue(Cfg.Mail.Host)
+	Cfg.File.Section("mail").Key("port").SetValue(Cfg.Mail.Port)
 
-	fileConfig.SaveTo("conf/app.ini")
+	Cfg.File.SaveTo(confPath)
 }
 
 func Prod() bool {

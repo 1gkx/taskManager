@@ -17,7 +17,6 @@ var funcMap = template.FuncMap{
 	"pagginated": func(arr interface{}) bool {
 		arrType := reflect.TypeOf(arr).String()
 		if arrType == "[]*store.Client" {
-			// return len(store.GetClientsAll()) > 2
 			return 5 > 2
 		}
 		if arrType == "[]*store.User" {
@@ -29,7 +28,6 @@ var funcMap = template.FuncMap{
 		var arrLength int
 		arrType := reflect.TypeOf(arr).String()
 		if arrType == "[]*store.Client" {
-			// arrLength = len(store.GetClientsAll())
 			arrLength = 5
 		}
 		if arrType == "[]*store.User" {

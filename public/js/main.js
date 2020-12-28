@@ -56,6 +56,50 @@ var MessageVisibleTimeout = 5000, // 5s
 
 document.addEventListener("DOMContentLoaded", function () {
 
+  // Сохранение данных пользователя
+  $("form[data-event='update']").submit(function(e) {
+    e.preventDefault();
+    if (this.checkValidity() === false) return this.classList.add('was-validated');
+    let self = this
+    fetch( this.action, {
+      method: 'POST',
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: formToJson($(this).serializeArray())
+    })
+      .then(
+        function(response) {
+          if (response.status === 201) {  
+            return document.location.href = self.action;
+          }
+          response.json().then( (res) => $().message(false, res.data))
+        }
+      )
+      .catch(function(err) {
+        response.json().then( (res) => $().message(false, err))
+      });
+  });
+  // Удаление пользователя
+  $('[data-event="delete"]').on('click', function(e) {
+    e.preventDefault();
+    let $el = e.target.closest('.item');
+    console.log(this.action)
+    if ($el && $el.dataset.id) {
+      fetch( this.action, {
+        method: 'DELETE',
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify({ "id": parseInt($el.dataset.id) })
+      })
+        .then((response) => {
+            response.json().then( (res) => $().message(true, res.data))
+        })
+        .catch(function(err) {
+          response.json().then( (res) => $().message(false, res.data))
+        });
+    }
+  });
+  // Утвердить карту
+  $('[data-event="approve"]').on('click', approveCard);
+
   $('.page-item').on('click', function (e) {
     let page = e.target.dataset.page
     $.ajax({
@@ -101,128 +145,23 @@ document.addEventListener("DOMContentLoaded", function () {
   $(".adduser").submit(function (e) {
     e.preventDefault();
     if (this.checkValidity() === false) return this.classList.add('was-validated');
-
-    let data = $(this).serializeArray(),
-      forJson = {};
-    data.forEach(function (el) {
-      forJson[el.name] = el.value
-    });
-    console.log(forJson);
-
+    let self = this
     fetch('/admin/user', {
       method: 'post',
       headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: 'forJson'
+      body: formToJson($(this).serializeArray())
     })
       .then(
         function(response) {
           console.log(response)
-          // if (response.status !== 200) {  
-          //   console.log('Looks like there was a problem. Status Code: ' +  
-          //     response.status);  
-          //   return;  
-          // }
-
-          // // Examine the text in the response  
-          // response.json().then(function(data) {  
-          //   console.log(data);  
-          // });  
-        }  
-      )  
-      .catch(function(err) {  
-        console.log('Fetch Error :-S', err);  
-      });
-
-    // $.ajax({
-    //     method: 'POST',
-    //     url: this.action,
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(forJson)
-    //   })
-    //   .done(function (res) {
-    //     // let responce = JSON.parse(res)
-    //     // $().message(true, responce.status)
-    //     return document.location.href = '/admin/users'
-    //   })
-    //   .fail(function (e) {
-    //     // console.log(e)
-    //     let error = JSON.parse(e.responseText)
-    //     $().message(false, error)
-    //   });
-  });
-
-  // Сохранение данных пользователя
-  $("form[data-event='update']").submit(function (e) {
-    e.preventDefault();
-    if (this.checkValidity() === false) return this.classList.add('was-validated');
-    let data = $(this).serializeArray(),
-      self = this,
-      forJson = {};
-    data.forEach(function (el) {
-      forJson[el.name] = el.value
-    });
-    forJson.id = parseInt(forJson.id)
-    console.log(forJson);
-
-    fetch('/admin/users', {
-      method: 'post',
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: JSON.stringify(forJson)
-    })
-      .then(
-        function(response) {
-          if (response.status !== 201) {  
-            console.error('Looks like there was a problem. Status Code: ' +  response.status);
-            return;
-          }
-          response.json().then( (data) => console.log(data))
         }
       )
       .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
-
-    // $.ajax({
-    //     method: 'PUT',
-    //     url: this.action,
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(forJson)
-    //   })
-    //   .done(function (res) {
-    //     let responce = JSON.parse(res)
-    //     return document.location.href = self.dataset.redirect
-    //   })
-    //   .fail(function (e) {
-    //     // console.log(e)
-    //     let error = JSON.parse(e.responseText)
-    //     $().message(false, error.status)
-    //   });
   });
 
-  // Удаление пользователя
-  $('[data-event="delete"]').on('click', function (e) {
-    e.preventDefault();
-    let $el = e.target.closest('.item');
-    if ($el && $el.dataset.id) {
-      $.ajax({
-          method: 'DELETE',
-          url: this.action,
-          contentType: 'application/json',
-          data: JSON.stringify({
-            "id": parseInt($el.dataset.id)
-          })
-        })
-        .done(function (res) {
-          let responce = JSON.parse(res)
-          $().message(true, responce.status)
-        })
-        .fail(function (e) {
-          console.log(e)
-          let error = JSON.parse(e.responseText)
-          $().message(false, "Не найдет id пользователя")
-        });
-    }
-  });
+
 
   // Сохранение настроект
   $(".settings").submit(function (event) {
@@ -248,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .fail(error => $().message(false, error));
   });
 
-  $('[data-event="approve"]').on('click', approveCard);
+
 
   // Авторизация и верификация
   $(".login").submit(function (e) {
@@ -358,6 +297,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+
+function formToJson(data) {
+  let json = {}
+  data.forEach(function (el) {
+    json[el.name] = el.value
+  });
+  json.id = parseInt(json.id)
+  return JSON.stringify(json)
+}
 
 function getTimeRemaining(endtime) {
   var t = Date.parse(endtime) - Date.parse(new Date());
