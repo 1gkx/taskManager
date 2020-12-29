@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Dashboard</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -27,11 +27,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Домашняя страница<span class="sr-only">(current)</span></a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="admin/dashboard.html">Администрирование</a>
+            <a class="nav-link" href="../home.html">Домашняя страница<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="dashboard.html">Администрирование</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Помощь</a>
@@ -56,86 +56,64 @@
     </div>
   </nav>
 
-  <div class="mt-5 container main card">
+  <div class="container main mt-5">
     <div class="row">
       <div class="col-3">
-        <div class="w-100 my-5">
-          <i class="fas fa-user" style="font-size: 180px;"></i>
+        <div class="list-group">
+          <a href="dashboard.users.html" class="list-group-item">
+            <i class="fas fa-users mx-2"></i>Пользователи
+          </a>
+          <a href="/admin/#" class="list-group-item">
+            <i class="fas fa-user-shield mx-2"></i>Группы
+          </a>
+          <a href="dashboard.projects.html"list-group-item">
+            <i class="fas fa-cubes mx-2"></i>Проекты
+          </a>
+          <a href="dashboard.settings.html" class="list-group-item">
+            <i class="fas fa-cogs mx-2"></i>Настройки
+          </a>
+          <a href="/admin/#" class="list-group-item">
+            <i class="fas fa-info-circle mx-2"></i>Информация
+          </a>
         </div>
-        <h4>Konovalov Igor</h4>
-        <p>Web-developer</p>
-        <p style="font-size: 12px;line-height: 0px;margin-bottom: 0.5rem !important;">
-          <a href="tel:+7(999)999-99-99">
-            <i class="fas fa-phone-alt mx-2"></i>
-            +7(999)999-99-99
-          </a>
-        </p>
-        <p style="font-size: 12px;line-height: 0px;margin-bottom: 0.5rem !important;">
-          <a href="mailto:konovalov@admin.com">
-            <i class="far fa-envelope mx-2"></i>
-            konovalov@admin.com
-          </a>
-        </p>
-        <p style="font-size: 12px;line-height: 0px;margin-bottom: 0.5rem !important;">
-          <i class="fas fa-map-marker-alt mx-2"></i>
-          St. Petersburg
-        </p>
       </div>
       <div class="col-9">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link" href="home/home.tasks.html">Задачи</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="home/home.projects.html">Проекты</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home/home.timeline.html">События</a>
-          </li>
-        </ul>
-        <h3 class="my-4 text-center">Projects</h3>
-        <div class="card">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-10">
-                  <h4>
-                    <a href="project/project.view.html">CRM Bitrix24</a>
-                  </h4>
-                  <p>Тестовый проект CRM. Для развития бизнеса и т.д.</p>
-                </div>
-                <div class="col-2 text-center">
-                  <div>100/31</div>
+        <div class="container text-center">
+          <h3 class="mb-3">Dashboard</h3>
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <h6 class="card-header">Users</h6>
+                <div class="card-body">
+                  <h2 class="card-text">5</h2>
                 </div>
               </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-10">
-                  <h4>
-                    <a href="project/project.view.html">Redmine</a>
-                  </h4>
-                  <p>Система управления проектами. Используется для формирования здач в спринт, мониторинг работы и т.д.</p>
-                </div>
-                <div class="col-2 text-center">
-                  <div>67/46</div>
+            </div>
+            <div class="col-4">
+              <div class="card">
+                <h6 class="card-header">Projects</h6>
+                <div class="card-body">
+                  <h2 class="card-text">3</h2>
                 </div>
               </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-10">
-                  <h4>
-                    <a href="project/project.view.html">Зарплатный проект</a>
-                  </h4>
-                  <p>Web-интерфейс для идентификации физических лиц при выдаче банковских карт</p>
-                </div>
-                <div class="col-2 text-center">
-                  <div>11/8</div>
+            </div>
+            <div class="col-4">
+              <div class="card">
+                <h6 class="card-header">Tasks</h6>
+                <div class="card-body">
+                  <h2 class="card-text">95</h2>
                 </div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
+          <div class="card my-4">
+            <h6 class="card-header">System Monitor Status</h6>
+            <div class="card-body">
+              Memory user: 16Mb
+              Up Time: 1d 14h 13m
+              Root dir /opt/tsm/
+            </div>
+          </div>
         </div>
       </div>
     </div>
