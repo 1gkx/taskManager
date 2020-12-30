@@ -56,6 +56,28 @@ var MessageVisibleTimeout = 5000, // 5s
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // Тестирование получение аватара
+    // fetch('https://uifaces.co/api?limit=1&emotion[]=happiness', {
+    //   method: 'GET',
+    //   headers: {
+    //     'X-API-KEY': '3A0C26A2-F308413A-8DD5CD87-4D946B7A',
+    //     'Accept': 'application/json',
+    //     'Cache-Control': 'no-cache'
+    //   }
+    // })
+    // .then(function(response) {
+    //   response.json().then( (res) => {
+    //     console.log(res)
+    //     $('#avatar').attr('src', res[0].photo);
+    //   })
+    // })
+    // .catch(function(err) {
+    //   console.log(err)
+    //   // response.json().then( (res) => $().message(false, err))
+    // });
+
+
+
   // Сохранение данных пользователя
   $("form[data-event='update']").submit(function(e) {
     e.preventDefault();

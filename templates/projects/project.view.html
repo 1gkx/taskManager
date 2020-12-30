@@ -1,0 +1,85 @@
+{{ define "projectview" }}
+
+{{ block "header" .}}{{ end }}
+{{ block "navbar" .}}{{ end }}
+
+  <div class="mt-5 container main card">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="my-4 text-center">CRM Bitrix 24</h3>
+
+        {{ block "project.navbar" .}}{{ end }}
+
+        <div class="card">
+          <p>Название: CRM Bitrix 24</p>
+          <p>Project manger: Тестиков Тестик</p>
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <table class="table table-striped table-hover table-list-search">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th></th><th class="text-center">Открыто</th><th class="text-center">Закрыто</th><th class="text-center">Всего</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="item">
+                      <td>Ошибка</td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                    </tr>
+                    <tr class="item">
+                      <td>Поддержка</td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                    </tr>
+                    <tr class="item">
+                      <td>Поддержка</td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="#">0</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                <div>
+                  Менеджер: <a href="mailto:admin@pskb.com">Тестиков Тестик</a>, <a href="mailto:admin@pskb.com">Тестиков Тестик</a>, <a href="mailto:admin@pskb.com">Тестиков Тестик</a>, 
+                  <a href="mailto:admin@pskb.com">Тестиков Тестик</a>, <a href="mailto:admin@pskb.com">Тестиков Тестик</a>, <a href="mailto:admin@pskb.com">Тестиков Тестик</a>
+                </div>
+                <div>
+                  Разработчик: <a href="mailto:admin@pskb.com">web-dev</a>, <a href="mailto:admin@pskb.com">web-dev</a>, <a href="mailto:admin@pskb.com">web-dev</a>, 
+                  <a href="mailto:admin@pskb.com">web-dev</a>, <a href="mailto:admin@pskb.com">web-dev</a>, <a href="mailto:admin@pskb.com">web-dev</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{{template "footer" .}}
+{{ end }}

@@ -1,0 +1,101 @@
+{{ define "home.tasks" }}
+
+{{ block "header" .}}{{ end }}
+{{ block "navbar" .}}{{ end }}
+
+<div class="mt-5 container main card">
+  <div class="row">
+    <div class="col-3">
+      {{ block "home.userinfo" .}}{{ end }}
+    </div>
+    <div class="col-9">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="/tasks">Задачи</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/projects">Проекты</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/timeline">События</a>
+        </li>
+      </ul>
+
+      <h3 class="my-4 text-center">Tasks</h3>
+      <div class="card">
+        <table class="table table-striped table-hover table-list-search">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th><th>Тип</th><th>Описание задачи</th><th>Статус</th><th>Приоритет</th><th>Назначена</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">1</a></td>
+              <td>Улучшение</td> <td>Задача №1</td> <td>Новая</td> <td>Нормальный</td> <td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">2</a></td>
+              <td>Улучшение</td><td>Задача №2</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">3</a></td>
+              <td>Улучшение</td><td>Задача №3</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">4</a></td>
+              <td>Улучшение</td><td>Задача №4</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">5</a></td>
+              <td>Улучшение</td><td>Задача №5</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">6</a></td>
+              <td>Улучшение</td><td>Задача №6</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">7</a></td>
+              <td>Улучшение</td><td>Задача №7</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">8</a></td>
+              <td>Улучшение</td><td>Задача №8</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">9</a></td>
+              <td>Улучшение</td><td>Задача №9</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">10</a></td>
+              <td>Улучшение</td><td>Задача №10</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">11</a></td>
+              <td>Улучшение</td><td>Задача №11</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">12</a></td>
+              <td>Улучшение</td><td>Задача №12</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">13</a></td>
+              <td>Улучшение</td><td>Задача №13</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">14</a></td>
+              <td>Улучшение</td> <td>Задача №14</td> <td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+            <tr class="item">
+              <td><a href="../tasks/task.view.html">15</a></td>
+              <td>Улучшение</td><td>Задача №15</td><td>Новая</td><td>Нормальный</td><td>Тестико Тестик</td>
+            </tr>
+          </tbody>
+        </table>
+
+    </div>
+  </div>
+</div>
+
+{{template "footer" .}}
+{{ end }}

@@ -3,6 +3,6 @@ package store
 func migrate() {
 
 	// Миграция схем
-	x.Debug().AutoMigrate(&User{})
+	x.AutoMigrate(&User{})
 
 }

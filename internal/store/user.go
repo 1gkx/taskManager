@@ -99,7 +99,7 @@ func (u *User) TimeUpdateAt() string {
 // Valid ...
 func (u *User) Valid() bool {
 	// TODO Сделать номальную валидацию
-	return strings.Contains(u.Email, "@") && len(u.FirstName) > 0 && len(u.LastName) > 0 && len(u.Phone) > 0
+	return strings.Contains(u.Email, "@") && len(u.FirstName) > 0 && len(u.LastName) > 0
 }
 
 func IsUserExist(u *User) bool {

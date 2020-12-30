@@ -28,6 +28,15 @@ func NewRouter() *mux.Router {
 	route.HandleFunc("/", index).Methods("GET")
 	// r.Handle("/user", authRequireHandlerWrap(profile)).Methods("GET")
 
+	route.HandleFunc("/tasks", hometask).Methods("GET")
+	route.HandleFunc("/projects", homeproject).Methods("GET")
+	route.HandleFunc("/timeline", hometimeline).Methods("GET")
+
+	// Projects
+	route.HandleFunc("/project/{id:[0-9]+}", projectview).Methods("GET")
+	route.HandleFunc("/project/{id:[0-9]+}/tasks", projecttasks).Methods("GET")
+	route.HandleFunc("/project/{id:[0-9]+}/settings", projectsetting).Methods("GET")
+
 	// Users
 	// route.Handle("/admin/users", authRequireHandlerWrap(userList)).Methods("GET")
 	route.HandleFunc("/admin/users", userList).Methods("GET")

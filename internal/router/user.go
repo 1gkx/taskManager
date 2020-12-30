@@ -59,11 +59,21 @@ func userList(w http.ResponseWriter, r *http.Request) {
 
 func userAdd(w http.ResponseWriter, r *http.Request) {
 
+	// bodyBytes, err := ioutil.ReadAll(r.Body)
+	// if err != nil {
+	// 	RespAPI(http.StatusInternalServerError, w, err.Error())
+	// 	return
+	// }
+	// bodyString := string(bodyBytes)
+	// fmt.Printf("Body: %s\n", bodyString)
+
 	u := new(store.User)
 	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
 		RespAPI(http.StatusInternalServerError, w, err)
 		return
 	}
+
+	fmt.Printf("User: %+v\n", u)
 
 	// New User
 	if u.ID == 0 {
