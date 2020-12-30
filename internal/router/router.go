@@ -14,11 +14,6 @@ func NewRouter() *mux.Router {
 
 	route = mux.NewRouter().StrictSlash(true)
 
-	// setPublicFolder()
-	// setUserRouters()
-	// setSignInRouters()
-	// setSettingRouters()
-
 	publicFolder := http.FileServer(http.Dir("./public"))
 	route.PathPrefix("/js/").Handler(publicFolder)
 	route.PathPrefix("/css/").Handler(publicFolder)
@@ -32,10 +27,16 @@ func NewRouter() *mux.Router {
 	route.HandleFunc("/projects", homeproject).Methods("GET")
 	route.HandleFunc("/timeline", hometimeline).Methods("GET")
 
+	route.HandleFunc("/task/{id:[0-9]+}", taskview).Methods("GET")
+
 	// Projects
 	route.HandleFunc("/project/{id:[0-9]+}", projectview).Methods("GET")
 	route.HandleFunc("/project/{id:[0-9]+}/tasks", projecttasks).Methods("GET")
 	route.HandleFunc("/project/{id:[0-9]+}/settings", projectsetting).Methods("GET")
+
+	route.HandleFunc("/project", projectadd).Methods("POST")
+
+	route.HandleFunc("/admin", dashboard).Methods("GET")
 
 	// Users
 	// route.Handle("/admin/users", authRequireHandlerWrap(userList)).Methods("GET")

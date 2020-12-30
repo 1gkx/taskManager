@@ -1,0 +1,55 @@
+{{ define "admin.dashboard" }}
+
+{{template "header" .title}}
+{{template "navbar" .}}
+
+<div class="container main mt-5">
+  <div class="row">
+    <div class="col-3">
+      {{ block "leftmenu" .}}{{ end }}
+    </div>
+    <div class="col-9">
+      <div class="container text-center">
+        <h4 class="mb-3">Dashboard</h4>
+        <div class="row">
+          <div class="col-4">
+            <div class="card">
+              <h6 class="card-header">Users</h6>
+              <div class="card-body">
+                <h2 class="card-text">{{ users }}</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <h6 class="card-header">Projects</h6>
+              <div class="card-body">
+                <h2 class="card-text">3</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <h6 class="card-header">Tasks</h6>
+              <div class="card-body">
+                <h2 class="card-text">95</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card my-4">
+          <h6 class="card-header">System Monitor Status</h6>
+          <div class="card-body">
+            Memory user: 16Mb
+            Up Time: 1d 14h 13m
+            Root dir /opt/tsm/
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{template "footer" .}}
+
+{{ end }}

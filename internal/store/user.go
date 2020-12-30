@@ -139,3 +139,11 @@ func (u *User) GetPhoneNumber() string {
 func NormalizeEmail(email string) string {
 	return strings.ToLower(email)
 }
+
+func UserCount() int64 {
+	var count int64
+	fmt.Printf("DB: %+v\n", GetEnginie())
+	fmt.Println(x.Debug().Where("id > 0").Find(&User{}).RowsAffected)
+	x.Debug().Model(&User{}).Count(&count)
+	return count
+}

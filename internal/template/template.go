@@ -13,40 +13,41 @@ import (
 
 var Templates *template.Template
 
-var funcMap = template.FuncMap{
-	"pagginated": func(arr interface{}) bool {
-		arrType := reflect.TypeOf(arr).String()
-		if arrType == "[]*store.Client" {
-			return 5 > 2
-		}
-		if arrType == "[]*store.User" {
-			return len(store.FindUser(1, 10)) > 2
-		}
-		return false
-	},
-	"listPage": func(arr interface{}) []struct{} {
-		var arrLength int
-		arrType := reflect.TypeOf(arr).String()
-		if arrType == "[]*store.Client" {
-			arrLength = 5
-		}
-		if arrType == "[]*store.User" {
-			arrLength = len(store.FindUser(1, 10))
-		}
-		// Вынести смещение в переменную, т.к. используется в нескольких местах
-		count := arrLength / 5
-		if arrLength-count*5 > 0 {
-			count = count + 1
-		}
-		return make([]struct{}, count)
-	},
-	"inc": func(i int) int {
-		return i + 1
-	},
-	"copyrightYear": func() string {
-		return fmt.Sprintf("%d", time.Now().Year())
-	},
-}
+// var funcMap = template.FuncMap{
+// 	"users": store.UserCount(),
+// 	"pagginated": func(arr interface{}) bool {
+// 		arrType := reflect.TypeOf(arr).String()
+// 		if arrType == "[]*store.Client" {
+// 			return 5 > 2
+// 		}
+// 		if arrType == "[]*store.User" {
+// 			return len(store.FindUser(1, 10)) > 2
+// 		}
+// 		return false
+// 	},
+// 	"listPage": func(arr interface{}) []struct{} {
+// 		var arrLength int
+// 		arrType := reflect.TypeOf(arr).String()
+// 		if arrType == "[]*store.Client" {
+// 			arrLength = 5
+// 		}
+// 		if arrType == "[]*store.User" {
+// 			arrLength = len(store.FindUser(1, 10))
+// 		}
+// 		// Вынести смещение в переменную, т.к. используется в нескольких местах
+// 		count := arrLength / 5
+// 		if arrLength-count*5 > 0 {
+// 			count = count + 1
+// 		}
+// 		return make([]struct{}, count)
+// 	},
+// 	"inc": func(i int) int {
+// 		return i + 1
+// 	},
+// 	"copyrightYear": func() string {
+// 		return fmt.Sprintf("%d", time.Now().Year())
+// 	},
+// }
 
 func InitTemplate() {
 
@@ -55,7 +56,45 @@ func InitTemplate() {
 
 	tmpls := getFiles(pathTemplates, &templates)
 
-	Templates = template.Must(template.New("").Funcs(funcMap).ParseFiles(
+	Templates = template.Must(template.New("").Funcs(
+		template.FuncMap{
+			"users": func() int64 {
+				return store.UserCount()
+			},
+			"pagginated": func(arr interface{}) bool {
+				arrType := reflect.TypeOf(arr).String()
+				if arrType == "[]*store.Client" {
+					return 5 > 2
+				}
+				if arrType == "[]*store.User" {
+					return len(store.FindUser(1, 10)) > 2
+				}
+				return false
+			},
+			"listPage": func(arr interface{}) []struct{} {
+				var arrLength int
+				arrType := reflect.TypeOf(arr).String()
+				if arrType == "[]*store.Client" {
+					arrLength = 5
+				}
+				if arrType == "[]*store.User" {
+					arrLength = len(store.FindUser(1, 10))
+				}
+				// Вынести смещение в переменную, т.к. используется в нескольких местах
+				count := arrLength / 5
+				if arrLength-count*5 > 0 {
+					count = count + 1
+				}
+				return make([]struct{}, count)
+			},
+			"inc": func(i int) int {
+				return i + 1
+			},
+			"copyrightYear": func() string {
+				return fmt.Sprintf("%d", time.Now().Year())
+			},
+		},
+	).ParseFiles(
 		*tmpls...,
 	))
 }

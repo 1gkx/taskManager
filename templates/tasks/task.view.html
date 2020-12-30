@@ -1,0 +1,135 @@
+{{ define "task.view" }}
+
+{{ block "header" .}}{{ end }}
+{{ block "navbar" .}}{{ end }}
+
+  <div class="mt-5 container main card">
+    <div class="row py-2 px-4">
+      <div class="col-12">
+        <div>
+          <div class="mx-4 mt-4">
+            <h2>Настройка мониторинга получения Web-заявок с помощью Графана</h2>
+            <p class="text-muted small">Добавил(а) Г. Истомин 4 месяца назад.</p>
+          </div>
+          <hr class="mb-2">
+          <div class="row">
+            <div class="col-4">
+              <p>Статус: Новая</p>
+            </div>
+            <div class="col-4">
+              <p>Приоритет: Нормальный</p>
+            </div>
+            <div class="col-4">
+              <p>Иниициатор: ПСКБ.Управление автоматизации</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Назначена: И. Коновалов</p>
+            </div>
+            <div class="col-4">
+              <p>Дата начала: 13.09.2020</p>
+            </div>
+            <div class="col-4">
+              <p>Дата завершения: 13.09.2020</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-8">
+              <h5>Описание</h5>
+              <div class="jumbotron">
+                <p>Настройка мониторинга получения Web-заявок с помощью Графана</p>
+              </div>
+            </div>
+            <div class="col-4">
+              <h5>Вложения</h5>
+              <div class="jumbotron">
+                <p>Вложения</p>
+              </div>
+            </div>
+          </div>
+
+          <h5>Комментарии</h5>
+            <div class="container py-2 mt-4 mb-4">
+              <!-- timeline item 1 -->
+              <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                  <i class="fas fa-user" style="font-size: 64px;"></i>
+                </div>
+                <!-- timeline item 1 event content -->
+                <div class="col py-2">
+                  <div class="">
+                    <div class="">
+                      <div class="float-right text-muted small">Mon, Jan 9th 2019 7:00 AM</div>
+                      <h6 class="card-title">admin@admin.com</h6>
+                      <p class="small">Welcome to the campus, introduction and get started with the tour.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/row-->
+              <!-- timeline item 2 -->
+              <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                  <i class="fas fa-user" style="font-size: 64px;"></i>
+                </div>
+                <div class="col py-2">
+                  <div class="">
+                    <div class="">
+                      <div class="float-right text-muted small">Tue, Jan 10th 2019 8:30 AM</div>
+                      <h6 class="card-title">admin@admin.com</h6>
+                      <p class="small">Sign-up for the lessons and speakers that coincide with your course syllabus.
+                        Meet and greet with instructors.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/row-->
+              <!-- timeline item 3 -->
+              <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                  <i class="fas fa-user" style="font-size: 64px;"></i>
+                </div>
+                <div class="col py-2">
+                  <div class="">
+                    <div class="">
+                      <div class="float-right text-muted small">Wed, Jan 11th 2019 8:30 AM</div>
+                      <h6 class="card-title">admin@admin.com</h6>
+                      <p class="small">Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo Park Godard kogi, next level irony
+                        ennui twee squid fap selvage. Meggings flannel Brooklyn literally small batch, mumblecore PBR
+                        try-hard kale chips. Brooklyn vinyl lumbersexual
+                        bicycle rights, viral fap cronut leggings squid chillwave pickled gentrify mustache. 3 wolf moon
+                        hashtag church-key Odd Future. Austin messenger bag normcore, Helvetica Williamsburg sartorial
+                        tote bag distillery Portland before
+                        they sold out gastropub taxidermy Vice.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/row-->
+              <!-- timeline item 4 -->
+              <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                  <i class="fas fa-user" style="font-size: 64px;"></i>
+                </div>
+                <div class="col py-2">
+                  <div class="">
+                    <div class="">
+                      <div class="float-right text-muted small">Thu, Jan 12th 2019 11:30 AM</div>
+                      <h6 class="card-title">admin@admin.com</h6>
+                      <p class="small">Join us for lunch in Bootsy's cafe across from the Campus Center.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/row-->
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{template "footer" .}}
+  {{ end }}

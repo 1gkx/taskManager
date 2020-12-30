@@ -4,8 +4,9 @@ import "gorm.io/gorm"
 
 type Project struct {
 	gorm.Model
-	Name    string
-	Manager string
-	Tasks   string
-	Members string
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Manager     string `json:"manager"`
+	Tasks       string `json:"tasks"`
+	Members     string `json:"members"`
 }
